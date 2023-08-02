@@ -14,14 +14,13 @@ function New-HCVaultToken {
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
-        [HCVaultContext]
-        $ctx,
+        [Parameter(Mandatory=$True)]
+        [HCVaultContext]$ctx,
 
-        [Parameter]
+        [Parameter()]
         [string]$Role,
 
-        [Parameter]
+        [Parameter()]
         [string]$Ttl
     )
 
@@ -31,7 +30,7 @@ function New-HCVaultToken {
     if ($Ttl) {
         $req.Body | Add-Member -MemberType NoteProperty -Name "ttl" -Value $Ttl
     }
-    if ($Ttl) {
+    if ($Role) {
         $req.Body | Add-Member -MemberType NoteProperty -Name "role_name" -Value $Role
     }
     if($SecretID) {
