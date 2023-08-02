@@ -1,6 +1,6 @@
 
 function New-HCVaultContext {
-        <#
+    <#
     .SYNOPSIS
     Creates a new HCVaultContext object from parameters.
     
