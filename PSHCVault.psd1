@@ -8,7 +8,7 @@
     RootModule = 'PSHCVault.psm1'
     
     # Version number of this module.
-    ModuleVersion = '0.0.1'
+    ModuleVersion = '0.0.2'
     
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -17,13 +17,13 @@
     GUID = '645c241c-d75f-42e7-bd43-698001419981'
     
     # Author of this module
-    Author = ''
+    Author = 'Andreas Schmidt'
     
     # Company or vendor of this module
     CompanyName = ''
     
     # Copyright statement for this module
-    Copyright = '(c) 2023. All rights reserved.'
+    Copyright = '(c) 2023 @aschmidt75. All rights reserved.'
     
     # Description of the functionality provided by this module
     Description = 'Hashicorp Vault Client Library for PowerShell'
