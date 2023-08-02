@@ -27,14 +27,11 @@ function Get-HCVaultHealth {
                 $_
             )     
         }
-    
-    
     }
     end {
         if ($res.StatusCode -eq 200) {
             return $res.Body
         }
-    
         return $None    
     }
 
