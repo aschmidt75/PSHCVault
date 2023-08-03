@@ -1,7 +1,13 @@
 Function Test-HCVaultToken {
     <#
     .SYNOPSIS
-    Look up metadata of a given token
+        Look up metadata of a given token
+
+    .PARAMETER ctx  
+        HCVaultContext object
+
+    .PARAMETER Token
+        Token to test 
     #>
 
     [CmdletBinding()]

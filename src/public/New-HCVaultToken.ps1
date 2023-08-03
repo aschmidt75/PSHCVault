@@ -2,15 +2,22 @@
 function New-HCVaultToken {
     <#
     .SYNOPSIS
-    Create a new token with options
+        Create a new token with options
+    
+    .DESCRIPTION
+        Based on the authenticated context, this function creates a new token.
+        Optional arguments are the token role and a time to live.
+        Returns the full API authentication block, where the token is
+        wrapped as a [securestring].
 
     .EXAMPLE
-    $c = New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
-    $c | Update-HCVaultContext -Token (ConvertTo-SecureString -AsPlainText "<token>")
-    $auth = New-HCVaultToken -ctx $c -Ttl 1h -Role default
-
+        $c = New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
+        $c | Update-HCVaultContext -Token (ConvertTo-SecureString -AsPlainText "<token>")
+        $auth = New-HCVaultToken -ctx $c -Ttl 1h -Role default
+        Test-HCVaultToken -Ctx $c -Token $auth.Token
+        
     .LINK
-    https://developer.hashicorp.com/vault/api-docs/auth/token#create-token
+        https://developer.hashicorp.com/vault/api-docs/auth/token#create-token
     #>
     [CmdletBinding()]
     param (
