@@ -31,10 +31,12 @@ function New-HCVaultTokenByAuthWithAppRole {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true)]
+        [ValidateNotNull()]
         [HCVaultContext]
-        $ctx,
+        $Ctx,
 
         [Parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
         [string]$AppRoleID,
 
         [Parameter()]
@@ -55,7 +57,7 @@ function New-HCVaultTokenByAuthWithAppRole {
     $res = $None
 
     try {
-        $res = InvokeHCVaultAPI -ctx $ctx -req $req 
+        $res = InvokeHCVaultAPI -ctx $Ctx -req $req 
     } catch {
         $msg = "Unable to get token by app role: statusCode={0},Message={1}" -f $_.TargetObject.statusCode, $_.TargetObject.Exception.Message
         throw [ErrorRecord]::new( 
@@ -73,7 +75,7 @@ function New-HCVaultTokenByAuthWithAppRole {
         $auth = New-HCVaultAuth -bodyAuthPart $res.Body.auth
 
         if ($UpdateContext) {
-            $ctx.VaultToken = $auth.Token
+            $Ctx.VaultToken = $auth.Token
         }
 
         return $auth

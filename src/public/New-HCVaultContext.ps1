@@ -14,20 +14,22 @@ function New-HCVaultContext {
         $c = New-HCVaultContext -VaultAddr http://127.0.0.1:8200 -VaultToken $tk
     #>
     [CmdletBinding()]
+    [OutputType([psobject])]
     Param (
         [Parameter()]
+        [ValidateNotNullOrEmpty()]
         [String]$VaultAddr = "https://127.0.0.1:8200",
 
         [Parameter()]
         [securestring]$VaultToken 
     )
 
-    $ctx = New-Object HCVaultContext
+    $Ctx = New-Object HCVaultContext
 
     $vaultAddrUri = [System.Uri]$VaultAddr
-    $ctx.VaultAddr = $vaultAddrUri.AbsoluteUri
+    $Ctx.VaultAddr = $vaultAddrUri.AbsoluteUri
 
-    $ctx.VaultToken = $VaultToken
+    $Ctx.VaultToken = $VaultToken
 
-    $ctx
+    $Ctx
 }

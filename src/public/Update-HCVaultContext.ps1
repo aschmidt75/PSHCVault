@@ -5,7 +5,7 @@ function Update-HCVaultContext {
     Updates an HCVaultContext object with variables such as token etc.
 
     .EXAMPLE
-    $ctx | Update-HCVaultContext -Token $auth.token
+    $Ctx | Update-HCVaultContext -Token $auth.token
 
     #>
     [CmdletBinding()]
@@ -14,7 +14,8 @@ function Update-HCVaultContext {
             Mandatory         = $true,
             ValueFromPipeline = $true)
         ]
-        [HCVaultContext]$context,
+        [ValidateNotNull()]
+        [HCVaultContext]$Ctx,
         
         [Parameter()]
         [securestring]$Token
@@ -22,10 +23,10 @@ function Update-HCVaultContext {
 
     Process {
         if ($Token) {
-            $context.VaultToken = $Token
+            $Ctx.VaultToken = $Token
         }
     }
     End {
-        Write-Output $context
+        Write-Output $Ctx
     }
 }

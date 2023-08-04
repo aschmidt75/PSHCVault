@@ -19,15 +19,16 @@ Function Update-HCVaultTokenLease {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true)]
+        [ValidateNotNull()]
         [HCVaultContext]
-        $ctx,
+        $Ctx,
 
         [Parameter()]
         [securestring]$Token
     )
 
     if ($Token -eq $null) {
-        $Token = $ctx.VaultToken
+        $Token = $Ctx.VaultToken
     }
     
     $req = NewHCVaultAPIRequest -Method "POST" -Path "/auth/token/renew"
@@ -37,7 +38,7 @@ Function Update-HCVaultTokenLease {
     $res = $None
 
     try {
-        $res = InvokeHCVaultAPI -ctx $ctx -req $req 
+        $res = InvokeHCVaultAPI -ctx $Ctx -req $req 
     } catch {
         $msg = "Unable to renew token: statusCode={0},Message={1}" -f $_.TargetObject.statusCode, $_.TargetObject.Exception.Message
         throw [ErrorRecord]::new( 
@@ -65,14 +66,14 @@ Function Update-HCVaultTokenLeaseSelf {
     param (
         [Parameter(Mandatory=$true)]
         [HCVaultContext]
-        $ctx
+        $Ctx
     )
 
     $req = NewHCVaultAPIRequest -Method "POST" -Path "/auth/token/renew-self"
     $res = $None
 
     try {
-        $res = InvokeHCVaultAPI -ctx $ctx -req $req 
+        $res = InvokeHCVaultAPI -ctx $Ctx -req $req 
     } catch {
         $msg = "Unable to renew token: statusCode={0},Message={1}" -f $_.TargetObject.statusCode, $_.TargetObject.Exception.Message
         throw [ErrorRecord]::new( 

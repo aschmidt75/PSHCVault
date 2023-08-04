@@ -22,7 +22,8 @@ function New-HCVaultToken {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$True)]
-        [HCVaultContext]$ctx,
+        [ValidateNotNull()]
+        [HCVaultContext]$Ctx,
 
         [Parameter()]
         [string]$Role,
@@ -47,7 +48,7 @@ function New-HCVaultToken {
     $res = $None
 
     try {
-        $res = InvokeHCVaultAPI -ctx $ctx -req $req 
+        $res = InvokeHCVaultAPI -ctx $Ctx -req $req 
     } catch {
         $msg = "Unable to create token: statusCode={0},Message={1}" -f $_.TargetObject.statusCode, $_.TargetObject.Exception.Message
         throw [ErrorRecord]::new( 
@@ -65,7 +66,7 @@ function New-HCVaultToken {
         $auth = New-HCVaultAuth -bodyAuthPart $res.Body.auth
 
         if ($UpdateContext) {
-            $ctx.VaultToken = $auth.Token
+            $Ctx.VaultToken = $auth.Token
         }
 
         return $auth

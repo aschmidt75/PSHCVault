@@ -7,8 +7,9 @@ function Get-HCVaultHealth {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true)]
+        [ValidateNotNull()]
         [HCVaultContext]
-        $ctx
+        $Ctx
     )
 
     begin {
@@ -17,7 +18,7 @@ function Get-HCVaultHealth {
     }
     process {
         try {
-            $res = InvokeHCVaultAPI -ctx $ctx -req $req
+            $res = InvokeHCVaultAPI -ctx $Ctx -req $req
         } catch {
             $msg = "Unable to get health: statusCode={0},Message={1}" -f $_.TargetObject.statusCode, $_.TargetObject.Exception.Message
             throw [ErrorRecord]::new( 

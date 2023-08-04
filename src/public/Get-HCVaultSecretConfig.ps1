@@ -9,8 +9,9 @@ Function Get-HCVaultSecretConfig {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true)]
+        [ValidateNotNull()]
         [HCVaultContext]
-        $ctx,
+        $Ctx,
 
         [Parameter(Mandatory=$true)]
         [string]$SecretMountPath
@@ -21,7 +22,7 @@ Function Get-HCVaultSecretConfig {
     $res = $None
 
     try {
-        $res = InvokeHCVaultAPI -ctx $ctx -req $req 
+        $res = InvokeHCVaultAPI -ctx $Ctx -req $req 
     } catch {
         $msg = "Unable to get config: statusCode={0},Message={1}" -f $_.TargetObject.statusCode, $_.TargetObject.Exception.Message
         throw [ErrorRecord]::new( 
