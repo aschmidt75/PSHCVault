@@ -2,7 +2,7 @@
 
 A powershell client library for [Hashicorp Vault](vaultproject.io).
 
-![Dev CI](https://github.com/aschmidt75/PSHCVault/actions/workflows/dev-ci.yml/badge.svg)
+![Dev CI](https://github.com/aschmidt75/PSHCVault/actions/workflows/dev-ci.yaml/badge.svg)
 
 # Testing
 
