@@ -17,5 +17,6 @@ jobs:
       - name: Run tests
         shell: pwsh
         run: |
-          Import-Module .\PSHCVault -Force
+          Get-ChildItem
+          Import-Module ./PSHCVault -Verbose -Force
           Invoke-Pester -Passthru
