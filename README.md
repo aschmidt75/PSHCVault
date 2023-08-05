@@ -4,6 +4,8 @@ A powershell client library for [Hashicorp Vault](vaultproject.io).
 
 ![Dev CI](https://github.com/aschmidt75/PSHCVault/actions/workflows/dev-ci.yaml/badge.svg)
 
+For an overview of functions, see [examples/ExportedFunctions.md](examples/ExportedFunctions.md)
+
 # Testing
 
 [Pester](pester.dev) is used for unit-testing public commands. See [here for installation](https://pester.dev/docs/introduction/installation).
