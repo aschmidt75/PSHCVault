@@ -23,6 +23,7 @@ jobs:
         shell: bash
         run: |
           nohup vault server -dev -dev-root-token-id root &
+          for attempt in {1..10}; do sleep 1; if curl http://127.0.0.1:8200/; then echo ready; break; fi; echo waiting...; done 
       - name: Run tests
         shell: pwsh
         run: |
