@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  pester_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Run tests
+        shell: pwsh
+        run: |
+          Import-Module .\PSHCVault -Force
+          Invoke-Pester -Passthru
