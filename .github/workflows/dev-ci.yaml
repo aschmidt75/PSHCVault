@@ -18,7 +18,17 @@ jobs:
         run: |
           wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
           echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-          sudo apt update && sudo apt install vault      
+          sudo apt update && sudo apt install vault    
+      - name: Certificate setup for vault
+        run: |
+          openssl genpkey -algorithm RSA -out ca-private-key.pem
+          openssl req -new -x509 -key ca-private-key.pem -out ca-certificate.pem -days 3650 -subj /CN=vault-ca
+          for i in server client; do
+            openssl genpkey -algorithm RSA -out $i-key.pem
+            openssl req -new -key $i-key.pem -out $i-csr.pem -subj /CN=127.0.0.1
+            openssl x509 -req -in $i-csr.pem -CA ca-certificate.pem -CAkey ca-private-key.pem -CAcreateserial -out $i-cert.pem \
+              -days 3650 -extfile ca.cfg -extensions ${i}_cert
+          done          
       - name: Start vault dev server
         shell: bash
         run: |
