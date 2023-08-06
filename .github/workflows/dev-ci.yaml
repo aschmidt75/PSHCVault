@@ -27,12 +27,12 @@ jobs:
             openssl genpkey -algorithm RSA -out $i-key.pem
             openssl req -new -key $i-key.pem -out $i-csr.pem -subj /CN=127.0.0.1
             openssl x509 -req -in $i-csr.pem -CA ca-certificate.pem -CAkey ca-private-key.pem -CAcreateserial -out $i-cert.pem \
-              -days 3650 -extfile ca.cfg -extensions ${i}_cert
+              -days 3650 -extfile tests/ca.cfg -extensions ${i}_cert
           done          
       - name: Start vault dev server
         shell: bash
         run: |
-          nohup vault server -dev -dev-root-token-id root &
+          nohup vault server -dev -dev-listen-address="127.0.0.1:8200" -config=tests/vault-dev-tls-config.hcl -dev-root-token-id root &
           for attempt in {1..10}; do sleep 1; if curl http://127.0.0.1:8200/; then echo ready; break; fi; echo waiting...; done 
       - name: Run tests
         shell: pwsh
