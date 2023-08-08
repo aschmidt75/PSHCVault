@@ -21,7 +21,11 @@ function New-HCVaultContext {
         [String]$VaultAddr = "https://127.0.0.1:8200",
 
         [Parameter()]
-        [securestring]$VaultToken 
+        [securestring]$VaultToken,
+
+        [Parameter()]
+        [System.Security.Cryptography.X509Certificates.X509Certificate]$Certificate
+
     )
 
     $Ctx = New-Object HCVaultContext
@@ -30,6 +34,8 @@ function New-HCVaultContext {
     $Ctx.VaultAddr = $vaultAddrUri.AbsoluteUri
 
     $Ctx.VaultToken = $VaultToken
+
+    $Ctx.Certificate = $Certificate
 
     $Ctx
 }

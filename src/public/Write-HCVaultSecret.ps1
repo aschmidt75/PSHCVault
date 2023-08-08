@@ -6,6 +6,9 @@ Function Write-HCVaultSecret {
     .EXAMPLE
     > Write-HCVaultSecret -ctx $c -SecretMountPath secret -Path my-secret -Data @{ "baz" = "wooz" } -Verbose
 
+    .LINK
+    https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2#create-update-secret
+    
     #>
     [CmdletBinding()]
     param (

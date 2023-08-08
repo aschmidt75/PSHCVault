@@ -22,36 +22,42 @@ function InvokeHCVaultAPI {
 
     $uri = "{0}v1{1}" -f $ctx.VaultAddr, $req.Path
     $headers = @{ 
-
+        "Content-Type" = "application/json"
     }
     # supply x-vault-token if we have it
     if ($ctx.VaultToken) {
         $tk = ConvertFrom-SecureString -AsPlainText $ctx.VaultToken
         $headers."X-Vault-Token" = $tk
     }
+    $reqArgs = @{
+        Uri = $Uri
+        Method = $Req.Method
+        Headers = $Headers
+    }
+    if ($ctx.Certificate) {
+        $certArgs = @{
+            Certificate = $ctx.Certificate
+            SkipCertificateCheck = $true
+        }
+    }
     $res = New-Object HCVaultAPIResponse
 
-    Write-Verbose "Invoking: $($req.Method) $uri"
+    Write-Verbose "Invoking: $($req.Method) $uri" 
     try {
         if ($req.Method -eq "GET") {
-            $resp = Invoke-WebRequest -Uri $uri -Method $req.Method -Headers $headers
-
-            $res.StatusCode = $resp.StatusCode
-            if ($resp.StatusCode -eq 200) {
-                $res.Body = $resp.Content | ConvertFrom-Json
-            }
+            $resp = Invoke-WebRequest @reqArgs @certArgs
         }
         if ($req.Method -eq "POST") {
-            $body = $req.Body | ConvertTo-Json
-            $resp = Invoke-WebRequest -Uri $uri -Method $req.Method -Headers $headers -Body $body
-    
-            $res.StatusCode = $resp.StatusCode
-            if ($resp.StatusCode -eq 200) {
-                $res.Body = $resp.Content | ConvertFrom-Json
-            }
+            $resp = $req.Body | ConvertTo-Json -Compress | Invoke-WebRequest @reqArgs @certArgs
+        }
+
+        $res.StatusCode = $resp.StatusCode
+        if ($resp.StatusCode -eq 200) {
+            $res.Body = $resp.Content | ConvertFrom-Json
         }
     } catch {
         $msg = "Error invoking HCVault API: $($req.Method) $uri"
+        Write-Error $_ -ErrorAction Continue
         $to = [PSCustomObject]@{
             StatusCode = $res.StatusCode
             Exception = $_.Exception
