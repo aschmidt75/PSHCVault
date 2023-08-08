@@ -10,4 +10,7 @@ class HCVaultContext {
 
     # optional: token
     [securestring]$VaultToken
+
+    # optional: X509 key/certificate to connect with if $VaultAddr is https
+    [System.Security.Cryptography.X509Certificates.X509Certificate]$Certificate
 }

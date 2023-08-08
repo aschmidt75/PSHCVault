@@ -22,12 +22,14 @@ jobs:
       - name: Certificate setup for vault
         run: |
           openssl genpkey -algorithm RSA -out ca-private-key.pem
-          openssl req -new -x509 -key ca-private-key.pem -out ca-certificate.pem -days 3650 -subj /CN=vault-ca
+          openssl req -new -x509 -key ca-private-key.pem -out ca-certificate.pem -days 1 -subj /CN=vault-ca
           for i in server client; do
             openssl genpkey -algorithm RSA -out $i-key.pem
             openssl req -new -key $i-key.pem -out $i-csr.pem -subj /CN=127.0.0.1
             openssl x509 -req -in $i-csr.pem -CA ca-certificate.pem -CAkey ca-private-key.pem -CAcreateserial -out $i-cert.pem \
-              -days 3650 -extfile tests/ca.cfg -extensions ${i}_cert
+              -days 1 -extfile tests/ca.cfg -extensions ${i}_cert
+            cat ca-certificate.pem $i-cert.pem >$i-chain.pem
+            openssl pkcs12 -export -in $i-chain.pem -inkey $i-key.pem -CAfile ca-certificate.pem -out $i.pfx -nodes -passout pass:  
           done          
       - name: Start vault dev server
         shell: bash

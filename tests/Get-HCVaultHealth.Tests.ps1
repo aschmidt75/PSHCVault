@@ -1,7 +1,8 @@
 
 BeforeAll {    
     $token = ("root" | ConvertTo-SecureString -AsPlainText)
-    $local = New-HCVaultContext -VaultAddr "http://127.0.0.1:8200/" -VaultToken $token
+    $cert  = Get-PfxCertificate -FilePath client.pfx
+    $local = New-HCVaultContext -VaultAddr "http://127.0.0.2:9200/" -VaultToken $token -Certificate $cert
 }
 
 Describe 'Get-HCVaultHealth' {
