@@ -24,8 +24,10 @@ function New-HCVaultContext {
         [securestring]$VaultToken,
 
         [Parameter()]
-        [System.Security.Cryptography.X509Certificates.X509Certificate]$Certificate
+        [System.Security.Cryptography.X509Certificates.X509Certificate]$Certificate,
 
+        [Parameter()]
+        [switch]$SkipCertificateCheck
     )
 
     $Ctx = New-Object HCVaultContext
@@ -36,6 +38,11 @@ function New-HCVaultContext {
     $Ctx.VaultToken = $VaultToken
 
     $Ctx.Certificate = $Certificate
+    if ($Ctx.Certificate -and ($vaultAddrUri.Scheme -ne "https")) {
+        Write-Warning "Supplied -Certificate for non-https -VaultAddr"
+    } 
+
+    $Ctx.SkipCertificateCheck = $SkipCertificateCheck
 
     $Ctx
 }

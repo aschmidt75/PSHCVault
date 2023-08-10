@@ -37,7 +37,7 @@ function InvokeHCVaultAPI {
     if ($ctx.Certificate) {
         $certArgs = @{
             Certificate = $ctx.Certificate
-            SkipCertificateCheck = $true
+            SkipCertificateCheck = $ctx.SkipCertificateCheck
         }
     }
     $res = New-Object HCVaultAPIResponse

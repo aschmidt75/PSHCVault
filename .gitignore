@@ -1,2 +1,6 @@
 BACKLOG.md
 
+*.pem
+*.pfx
+*.csr
+*.srl
