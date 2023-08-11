@@ -16,5 +16,4 @@ class HCVaultContext {
 
     # optional: SkipCertificateCheck for self-signed certificates or certs not in trust store
     [boolean]$SkipCertificateCheck
-
 }
