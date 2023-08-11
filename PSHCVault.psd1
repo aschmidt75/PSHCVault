@@ -8,7 +8,7 @@
     RootModule = 'PSHCVault.psm1'
     
     # Version number of this module.
-    ModuleVersion = '0.0.2'
+    ModuleVersion = '0.0.3'
     
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -26,10 +26,10 @@
     Copyright = '(c) 2023 @aschmidt75. All rights reserved.'
     
     # Description of the functionality provided by this module
-    Description = 'Hashicorp Vault Client Library for PowerShell'
+    Description = 'PowerShell Client Library for the Hashicorp Vault API'
     
     # Minimum version of the Windows PowerShell engine required by this module
-    # PowerShellVersion = ''
+    PowerShellVersion = '7.0'
     
     # Name of the Windows PowerShell host required by this module
     # PowerShellHostName = ''
@@ -103,7 +103,7 @@
             IconUri = ''
     
             # ReleaseNotes of this module
-            ReleaseNotes = '0.0.2-dev'
+            ReleaseNotes = '0.0.3-dev'
     
             # Prerelease string of this module
             # Prerelease = ''
