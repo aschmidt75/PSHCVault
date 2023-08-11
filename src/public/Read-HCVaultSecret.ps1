@@ -1,31 +1,33 @@
 Function Read-HCVaultSecret {
     <#
     .SYNOPSIS
-    Reads a secret along with its metadata from a given path
+        Reads a secret along with its metadata from a given path
     
     .EXAMPLE
-    > Read-HCVaultSecret -ctx $c -SecretMountPath secret -Path my-secret
-    data            metadata
-    ----            --------
-    @{bar=b; foo=a} @{created_time=2023-07-13T13:32:02.565202827Z; custom_metadata=; deletion_time=; destroyed=False; version=1}
+        > Read-HCVaultSecret -ctx $c -SecretMountPath secret -Path my-secret
+        data            metadata
+        ----            --------
+        @{bar=b; foo=a} @{created_time=2023-07-13T13:32:02.565202827Z; custom_metadata=; deletion_time=; destroyed=False; version=1}
 
     .EXAMPLE
-    > Read-HCVaultSecret -ctx $c -SecretMountPath secret -Path my-secret -ExpandData foo
-    System.Security.SecureString 
+        > Read-HCVaultSecret -ctx $c -SecretMountPath secret -Path my-secret -ExpandData foo
+        System.Security.SecureString 
     
+    .LINK
+        https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2#read-secret-version
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNull()]
         [HCVaultContext]
         $Ctx,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [string]$SecretMountPath,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [string]$Path,
 

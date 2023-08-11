@@ -1,19 +1,23 @@
 Function Set-HCVaultSecretConfig {
     <#
     .SYNOPSIS
-    Set aspect of the configuration for a secret KV engine
+        Set aspects of the configuration for a secret KV engine
     
     .EXAMPLE
+        > Set-HCVaultSecretConfig -Ctx $c -SecretMountPath /secret -DeleteVersionAfter "8h"
+        > Get-HCVaultSecretConfig -Ctx $c
 
+    .LINK
+        https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2#configure-the-kv-engine
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNull()]
         [HCVaultContext]
         $Ctx,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [string]$SecretMountPath,
 
@@ -42,8 +46,6 @@ Function Set-HCVaultSecretConfig {
         $req.Body | Add-Member -MemberType NoteProperty -Name "max_versions" -Value $MaxVersions
     }
     $res = $None
-
-    Write-Verbose ($req.Body | ConvertTo-Json)
 
     try {
         $res = InvokeHCVaultAPI -ctx $Ctx -req $req 

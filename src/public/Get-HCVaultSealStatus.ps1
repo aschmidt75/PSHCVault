@@ -13,7 +13,7 @@ function Get-HCVaultSealStatus {
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNull()]
         [HCVaultContext]
         $Ctx

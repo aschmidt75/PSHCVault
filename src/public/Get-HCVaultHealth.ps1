@@ -13,7 +13,7 @@ function Get-HCVaultHealth {
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNull()]
         [HCVaultContext]
         $Ctx

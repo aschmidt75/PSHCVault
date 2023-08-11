@@ -1,4 +1,4 @@
-Function New-HCVaultAuth {
+Function NewHCVaultAuth {
     <#
     .SYNOPSIS
     Create an instance of HCVaultAuth from a auth response, including wrapping the token in a [securestring]

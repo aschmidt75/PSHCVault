@@ -2,40 +2,43 @@
 function New-HCVaultTokenByAuthWithAppRole {
     <#
     .SYNOPSIS
-    Requests a token by authenticating with AppRoleID and SecretID
+        Requests a token by authenticating with AppRoleID and SecretID
 
     .DESCRIPTION
-    Calls the /auth/approle/login endpoint to retrieve a token
+        Calls the /auth/approle/login endpoint to retrieve a token by passing the AppRoleID and
+        optionally the SecretID. Using UpdateContext, the received token replaces the current
+        token in the given context.
 
     .PARAMETER ctx
-    Object of class HCVaultContext
+        bject of class HCVaultContext
 
     .PARAMETER AppRoleID
-    AppRoleID, mandatory
+        AppRoleID, mandatory
 
     .PARAMETER SecretID
-    SecretID of AppRole, optional
+        SecretID of AppRole, optional
 
     .PARAMETER UpdateContext
-    If set to true, sets the received token into the passed context. Defaults to false
+        If set to true, sets the received token into the passed context. Defaults to false
 
     .EXAMPLE
-    $c = New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
-    $r = "<app-role-id>"
-    $s = ConvertTo-SecureString -AsPlainText "<secret-id>"
-    $auth = New-HCVaultTokenByAuthWithAppRole.ps1 -ctx $c -AppRoleID $r -SecretID $s -UpdateContext
-    Test-HCVaultTokenSelf -ctx $c                             
+        $c = New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
+        $r = "<app-role-id>"
+        $s = ConvertTo-SecureString -AsPlainText "<secret-id>"
+        $auth = New-HCVaultTokenByAuthWithAppRole.ps1 -ctx $c -AppRoleID $r -SecretID $s -UpdateContext
+        Test-HCVaultTokenSelf -ctx $c                             
 
     .LINK
+        https://developer.hashicorp.com/vault/api-docs/auth/approle#login-with-approle
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNull()]
         [HCVaultContext]
         $Ctx,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [string]$AppRoleID,
 
@@ -72,7 +75,7 @@ function New-HCVaultTokenByAuthWithAppRole {
         # string reuqest-part, take only auth part
         # secure client_token within. 
         # Create Auth class from this
-        $auth = New-HCVaultAuth -bodyAuthPart $res.Body.auth
+        $auth = NewHCVaultAuth -bodyAuthPart $res.Body.auth
 
         if ($UpdateContext) {
             $Ctx.VaultToken = $auth.Token

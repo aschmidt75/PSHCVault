@@ -18,13 +18,24 @@ function Update-HCVaultContext {
         [HCVaultContext]$Ctx,
         
         [Parameter()]
-        [securestring]$Token
+        [securestring]$Token,
+
+        [Parameter()]
+        [System.Security.Cryptography.X509Certificates.X509Certificate]$Certificate,
+
+        [Parameter()]
+        [switch]$SkipCertificateCheck
+
     )
 
     Process {
         if ($Token) {
             $Ctx.VaultToken = $Token
         }
+        if ($Certificate) {
+            $Ctx.Certificate = $Certificate
+        }
+        $Ctx.SkipCertificateCheck = $SkipCertificateCheck
     }
     End {
         Write-Output $Ctx

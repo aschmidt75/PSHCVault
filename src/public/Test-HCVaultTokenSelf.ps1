@@ -1,34 +1,24 @@
-Function Test-HCVaultToken {
+
+Function Test-HCVaultTokenSelf {
     <#
     .SYNOPSIS
-        Look up metadata of a given token
+        Look up metadata of the token in current HCVaultContext
 
-    .PARAMETER ctx  
-        HCVaultContext object
-
-    .PARAMETER Token
-        Token to test 
+    .EXAMPLE
+        > $c = New-HCVaultContext -VaultAddr http://127.0.0.1:8200/ -VaultToken (ConvertTo-SecureString -AsPlainText "...")
+        > Test-HCVaultTokenSelf -Ctx $c
 
     .LINK
-        https://developer.hashicorp.com/vault/api-docs/auth/token#lookup-a-token
+        https://developer.hashicorp.com/vault/api-docs/auth/token#lookup-a-token-self
     #>
-
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
-        [ValidateNotNull()]
         [HCVaultContext]
-        $Ctx,
-
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNull()]
-        [securestring]$Token
+        $Ctx
     )
 
-    $req = NewHCVaultAPIRequest -Method "POST" -Path "/auth/token/lookup"
-    $req.Body = @{
-        "token" = ConvertFrom-SecureString -AsPlainText $Token
-    }
+    $req = NewHCVaultAPIRequest -Method "GET" -Path "/auth/token/lookup-self"
     $res = $None
 
     try {

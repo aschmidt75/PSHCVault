@@ -7,11 +7,22 @@ function New-HCVaultContext {
     .PARAMETER VaultAddr
         Uri of Vault Address. Defaults to localhost, encrypted.
 
-    .PARAMETER Token
+    .PARAMETER VaultToken
         Optional token to authemticate with.
+
+    .PARAMETER Certificate
+        For a TLS connection to vault, set the client certificate as an X509Certificate object.
+        This must include the private key.
+
+    .PARAMETER SkipCertificateCheck
+        For a TLS connection with self signed certificates, skip the certificate check.
 
     .EXAMPLE
         $c = New-HCVaultContext -VaultAddr http://127.0.0.1:8200 -VaultToken $tk
+
+    .EXAMPLE
+        > $cert  = Get-PfxCertificate -FilePath client.pfx
+        > $c = New-HCVaultContext -VaultAddr https://127.0.0.1:9200 -VaultToken $tk -Certificate $cert $SkipCertificateCheck
     #>
     [CmdletBinding()]
     [OutputType([psobject])]

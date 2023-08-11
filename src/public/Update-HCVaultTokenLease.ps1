@@ -8,17 +8,20 @@ Function Update-HCVaultTokenLease {
         not explicitely given, it is taken from the context.
 
     .EXAMPLE
-        Update-HCVaultTokenLease -Ctx $c -Token $auth.Token
-        (Test-HCVaultToken -Ctx $c -Token $auth.token).ttl
+        > Update-HCVaultTokenLease -Ctx $c -Token $auth.Token
+        > (Test-HCVaultToken -Ctx $c -Token $auth.token).ttl
 
     .EXAMPLE
-        $c.VaultToken = $auth.token 
-        Update-HCVaultTokenLease -Ctx $c 
-        Test-HCVaultTokenSelf -Ctx $c
+        > $c.VaultToken = $auth.token 
+        > Update-HCVaultTokenLease -Ctx $c 
+        > Test-HCVaultTokenSelf -Ctx $c
+
+    .LINK
+        https://developer.hashicorp.com/vault/api-docs/auth/token#renew-a-token
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNull()]
         [HCVaultContext]
         $Ctx,
@@ -50,7 +53,7 @@ Function Update-HCVaultTokenLease {
     }
 
     if ($res.StatusCode -eq 200) {
-        return New-HCVaultAuth -bodyAuthPart $res.Body.auth
+        return NewHCVaultAuth -bodyAuthPart $res.Body.auth
     }
 
     return $None
@@ -64,7 +67,7 @@ Function Update-HCVaultTokenLeaseSelf {
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [HCVaultContext]
         $Ctx
     )
@@ -85,7 +88,7 @@ Function Update-HCVaultTokenLeaseSelf {
     }
 
     if ($res.StatusCode -eq 200) {
-        return New-HCVaultAuth -bodyAuthPart $res.Body.auth
+        return NewHCVaultAuth -bodyAuthPart $res.Body.auth
     }
 
     return $None

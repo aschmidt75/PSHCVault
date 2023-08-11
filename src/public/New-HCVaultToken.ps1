@@ -21,7 +21,7 @@ function New-HCVaultToken {
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$True)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNull()]
         [HCVaultContext]$Ctx,
 
@@ -63,7 +63,7 @@ function New-HCVaultToken {
         # string reuqest-part, take only auth part
         # secure client_token within. 
         # Create Auth class from this
-        $auth = New-HCVaultAuth -bodyAuthPart $res.Body.auth
+        $auth = NewHCVaultAuth -bodyAuthPart $res.Body.auth
 
         if ($UpdateContext) {
             $Ctx.VaultToken = $auth.Token
