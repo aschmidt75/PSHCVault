@@ -17,13 +17,10 @@ Function Test-HCVaultToken {
     param (
         [Parameter(Mandatory = $true)]
         [ValidateNotNull()]
-        [HCVaultContext]
-        $Ctx,
-
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNull()]
         [securestring]$Token
     )
+
+    $ctx = GetContextOrErr
 
     $req = NewHCVaultAPIRequest -Method "POST" -Path "/auth/token/lookup"
     $req.Body = @{

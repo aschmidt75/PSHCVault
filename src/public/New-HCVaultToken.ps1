@@ -11,26 +11,24 @@ function New-HCVaultToken {
         wrapped as a [securestring].
 
     .EXAMPLE
-        $c = New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
-        $c | Update-HCVaultContext -Token (ConvertTo-SecureString -AsPlainText "<token>")
-        $auth = New-HCVaultToken -ctx $c -Ttl 1h -Role default
-        Test-HCVaultToken -Ctx $c -Token $auth.Token
+        New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
+        Update-HCVaultContext -Token (ConvertTo-SecureString -AsPlainText "<token>")
+        $auth = New-HCVaultToken -Ttl 1h -Role default
+        Test-HCVaultToken -Token $auth.Token
         
     .LINK
         https://developer.hashicorp.com/vault/api-docs/auth/token#create-token
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNull()]
-        [HCVaultContext]$Ctx,
-
         [Parameter()]
         [string]$Role,
 
         [Parameter()]
         [string]$Ttl
     )
+
+    $ctx = GetContextOrErr
 
     $req = NewHCVaultAPIRequest -Method "POST" -Path "/auth/token/create"
     $req.Body = @{

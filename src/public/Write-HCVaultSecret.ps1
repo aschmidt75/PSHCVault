@@ -4,7 +4,7 @@ Function Write-HCVaultSecret {
         Writes a secret to the KV engine
     
     .EXAMPLE
-        > Write-HCVaultSecret -ctx $c -SecretMountPath secret -Path my-secret -Data @{ "baz" = "wooz" } -Verbose
+        > Write-HCVaultSecret -SecretMountPath secret -Path my-secret -Data @{ "baz" = "wooz" } -Verbose
 
     .LINK
         https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2#create-update-secret
@@ -12,11 +12,6 @@ Function Write-HCVaultSecret {
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNull()]
-        [HCVaultContext]
-        $Ctx,
-
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [string]$SecretMountPath,

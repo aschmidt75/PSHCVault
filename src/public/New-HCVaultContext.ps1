@@ -2,7 +2,8 @@
 function New-HCVaultContext {
     <#
     .SYNOPSIS
-        Creates a new HCVaultContext object from parameters.
+        Creates a new HCVaultContext object from parameters. This context will be automatically used
+        by other commands to connect to vault.
     
     .PARAMETER VaultAddr
         Uri of Vault Address. Defaults to localhost, encrypted.
@@ -18,14 +19,13 @@ function New-HCVaultContext {
         For a TLS connection with self signed certificates, skip the certificate check.
 
     .EXAMPLE
-        $c = New-HCVaultContext -VaultAddr http://127.0.0.1:8200 -VaultToken $tk
+        New-HCVaultContext -VaultAddr http://127.0.0.1:8200 -VaultToken $tk
 
     .EXAMPLE
         > $cert  = Get-PfxCertificate -FilePath client.pfx
-        > $c = New-HCVaultContext -VaultAddr https://127.0.0.1:9200 -VaultToken $tk -Certificate $cert $SkipCertificateCheck
+        > New-HCVaultContext -VaultAddr https://127.0.0.1:9200 -VaultToken $tk -Certificate $cert $SkipCertificateCheck
     #>
     [CmdletBinding()]
-    [OutputType([psobject])]
     Param (
         [Parameter()]
         [ValidateNotNullOrEmpty()]
@@ -55,5 +55,5 @@ function New-HCVaultContext {
 
     $Ctx.SkipCertificateCheck = $SkipCertificateCheck
 
-    $Ctx
+    $SCRIPT:HCVaultContext = $Ctx
 }

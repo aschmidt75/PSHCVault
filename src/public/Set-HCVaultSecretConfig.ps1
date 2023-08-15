@@ -4,19 +4,14 @@ Function Set-HCVaultSecretConfig {
         Set aspects of the configuration for a secret KV engine
     
     .EXAMPLE
-        > Set-HCVaultSecretConfig -Ctx $c -SecretMountPath /secret -DeleteVersionAfter "8h"
-        > Get-HCVaultSecretConfig -Ctx $c
+        > Set-HCVaultSecretConfig -SecretMountPath /secret -DeleteVersionAfter "8h"
+        > Get-HCVaultSecretConfig
 
     .LINK
         https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2#configure-the-kv-engine
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNull()]
-        [HCVaultContext]
-        $Ctx,
-
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [string]$SecretMountPath,
@@ -31,6 +26,8 @@ Function Set-HCVaultSecretConfig {
         [Int64]$MaxVersions           # TODO make optional
 
     )
+
+    $ctx = GetContextOrErr
 
     $p = "/{0}/config" -f $SecretMountPath
     $req = NewHCVaultAPIRequest -Method "POST" -Path $p

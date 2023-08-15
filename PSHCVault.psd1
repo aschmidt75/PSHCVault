@@ -8,7 +8,7 @@
     RootModule = 'PSHCVault.psm1'
     
     # Version number of this module.
-    ModuleVersion = '0.0.3'
+    ModuleVersion = '0.0.4'
     
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -103,7 +103,7 @@
             IconUri = ''
     
             # ReleaseNotes of this module
-            ReleaseNotes = '0.0.3-dev'
+            ReleaseNotes = '0.0.4-dev'
     
             # Prerelease string of this module
             # Prerelease = ''

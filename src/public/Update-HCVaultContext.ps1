@@ -5,29 +5,25 @@ function Update-HCVaultContext {
     Updates an HCVaultContext object with variables such as token etc.
 
     .EXAMPLE
-    $Ctx | Update-HCVaultContext -Token $auth.token
+    Update-HCVaultContext -Token $auth.token
 
     #>
     [CmdletBinding()]
     Param (
-        [parameter(
-            Mandatory         = $true,
-            ValueFromPipeline = $true)
-        ]
-        [ValidateNotNull()]
-        [HCVaultContext]$Ctx,
-        
-        [Parameter()]
+        [Parameter(Mandatory=$false)]
         [securestring]$Token,
 
-        [Parameter()]
+        [Parameter(Mandatory=$false)]
         [System.Security.Cryptography.X509Certificates.X509Certificate]$Certificate,
 
-        [Parameter()]
+        [Parameter(Mandatory=$false)]
         [switch]$SkipCertificateCheck
 
     )
 
+    Begin {
+        $Ctx = GetContextOrErr
+    }
     Process {
         if ($Token) {
             $Ctx.VaultToken = $Token
@@ -38,6 +34,6 @@ function Update-HCVaultContext {
         $Ctx.SkipCertificateCheck = $SkipCertificateCheck
     }
     End {
-        Write-Output $Ctx
+        $SCRIPT:HCVaultContext = $Ctx
     }
 }

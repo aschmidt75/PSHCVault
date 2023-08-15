@@ -10,7 +10,7 @@ Function Read-HCVaultSecret {
         @{bar=b; foo=a} @{created_time=2023-07-13T13:32:02.565202827Z; custom_metadata=; deletion_time=; destroyed=False; version=1}
 
     .EXAMPLE
-        > Read-HCVaultSecret -ctx $c -SecretMountPath secret -Path my-secret -ExpandData foo
+        > Read-HCVaultSecret -SecretMountPath secret -Path my-secret -ExpandData foo
         System.Security.SecureString 
     
     .LINK
@@ -18,11 +18,6 @@ Function Read-HCVaultSecret {
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNull()]
-        [HCVaultContext]
-        $Ctx,
-
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [string]$SecretMountPath,
@@ -35,6 +30,8 @@ Function Read-HCVaultSecret {
         [Parameter()]
         [string]$ExpandData = $null
     )
+
+    $ctx = GetContextOrErr
 
     $p = "/{0}/data/{1}" -f $SecretMountPath, $Path
     $req = NewHCVaultAPIRequest -Method "GET" -Path $p

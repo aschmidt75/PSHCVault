@@ -4,8 +4,8 @@ function Get-HCVaultHealth {
         Queries the system health of a vault instance.
     
     .EXAMPLE
-        $c = New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
-        Get-HCVaultHealth -Ctx $c
+        New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
+        Get-HCVaultHealth
 
     .LINK
         https://developer.hashicorp.com/vault/api-docs/system/health
@@ -13,15 +13,12 @@ function Get-HCVaultHealth {
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNull()]
-        [HCVaultContext]
-        $Ctx
     )
 
     begin {
         $req = NewHCVaultAPIRequest -Method "GET" -Path "/sys/health"
         $res = $None    
+        $ctx = GetContextOrErr
     }
     process {
         try {

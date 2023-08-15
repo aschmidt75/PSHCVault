@@ -4,8 +4,8 @@ Function Get-HCVaultSecretConfig {
         Returns the configuration for a secret KV engine
     
     .EXAMPLE
-        > $c = New-HCVaultContext -VaultAddr http://127.0.0.1:8200/ -VaultToken (ConvertTo-SecureString -AsPlainText "...") 
-        > Get-HCVaultSecretConfig -Ctx $c -SecretMountPath /secret    
+        > New-HCVaultContext -VaultAddr http://127.0.0.1:8200/ -VaultToken (ConvertTo-SecureString -AsPlainText "...") 
+        > Get-HCVaultSecretConfig -SecretMountPath /secret    
 
     .LINK
         https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2#read-kv-engine-configuration
@@ -14,13 +14,10 @@ Function Get-HCVaultSecretConfig {
     param (
         [Parameter(Mandatory = $true)]
         [ValidateNotNull()]
-        [HCVaultContext]
-        $Ctx,
-
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNull()]
         [string]$SecretMountPath
     )
+
+    $ctx = GetContextOrErr
 
     $p = "/{0}/config" -f $SecretMountPath
     $req = NewHCVaultAPIRequest -Method "GET" -Path $p
