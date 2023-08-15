@@ -4,8 +4,8 @@ function Get-HCVaultSealStatus {
         Queries the system seal status of a vault instance.
 
     .EXAMPLE
-        $c = New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
-        Get-HCVaultSealStatus -Ctx $c
+        New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
+        Get-HCVaultSealStatus
 
     .LINK
         https://developer.hashicorp.com/vault/api-docs/system/seal-status
@@ -13,15 +13,12 @@ function Get-HCVaultSealStatus {
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNull()]
-        [HCVaultContext]
-        $Ctx
     )
 
     begin {
         $req = NewHCVaultAPIRequest -Method "GET" -Path "/sys/seal-status"
         $res = $None    
+        $ctx = GetContextOrErr
     }
     process {
         try {

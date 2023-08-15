@@ -22,22 +22,17 @@ function New-HCVaultTokenByAuthWithAppRole {
         If set to true, sets the received token into the passed context. Defaults to false
 
     .EXAMPLE
-        $c = New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
+        New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
         $r = "<app-role-id>"
         $s = ConvertTo-SecureString -AsPlainText "<secret-id>"
-        $auth = New-HCVaultTokenByAuthWithAppRole.ps1 -ctx $c -AppRoleID $r -SecretID $s -UpdateContext
-        Test-HCVaultTokenSelf -ctx $c                             
+        $auth = New-HCVaultTokenByAuthWithAppRole.ps1 -AppRoleID $r -SecretID $s -UpdateContext
+        Test-HCVaultTokenSelf                             
 
     .LINK
         https://developer.hashicorp.com/vault/api-docs/auth/approle#login-with-approle
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNull()]
-        [HCVaultContext]
-        $Ctx,
-
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [string]$AppRoleID,
@@ -48,6 +43,8 @@ function New-HCVaultTokenByAuthWithAppRole {
         [Parameter()]
         [switch]$UpdateContext = $false
     )
+
+    $ctx = GetContextOrErr
 
     $req = NewHCVaultAPIRequest -Method "POST" -Path "/auth/approle/login"
     $req.Body = @{

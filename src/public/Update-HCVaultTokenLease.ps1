@@ -8,27 +8,23 @@ Function Update-HCVaultTokenLease {
         not explicitely given, it is taken from the context.
 
     .EXAMPLE
-        > Update-HCVaultTokenLease -Ctx $c -Token $auth.Token
-        > (Test-HCVaultToken -Ctx $c -Token $auth.token).ttl
+        > Update-HCVaultTokenLease -Token $auth.Token
+        > (Test-HCVaultToken -Token $auth.token).ttl
 
     .EXAMPLE
-        > $c.VaultToken = $auth.token 
-        > Update-HCVaultTokenLease -Ctx $c 
-        > Test-HCVaultTokenSelf -Ctx $c
+        > Update-HCVaultTokenLease
+        > Test-HCVaultTokenSelfc
 
     .LINK
         https://developer.hashicorp.com/vault/api-docs/auth/token#renew-a-token
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)]
-        [ValidateNotNull()]
-        [HCVaultContext]
-        $Ctx,
-
         [Parameter()]
         [securestring]$Token
     )
+
+    $Ctx = GetContextOrErr
 
     if ($Token -eq $null) {
         $Token = $Ctx.VaultToken
@@ -63,7 +59,6 @@ Function Update-HCVaultTokenLease {
 Function Update-HCVaultTokenLeaseSelf {
     <#
     .SYNOPSIS
-    Look up metadata of the token in current HCVaultContext
     #>
     [CmdletBinding()]
     param (
