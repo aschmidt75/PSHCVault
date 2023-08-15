@@ -18,7 +18,7 @@ Describe 'Get-HCVaultHealth' {
 
 Describe 'Get-HCVaultSealStatus' {
     It 'should return instance seal status' {
-        $h = Get-HCVaultSealStatus -Ctx $Local
+        $h = Get-HCVaultSealStatus
         $h | Should -Not -BeNullOrEmpty
 
         $h.initialized | Should -Be "True"

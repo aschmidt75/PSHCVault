@@ -11,7 +11,7 @@ Describe 'Token Lifecycle' {
         $h = Test-HCVaultTokenSelf
 
         $h | Should -Not -BeNullOrEmpty
-        $h.it | Should -Be "root"
+        $h.id | Should -Be "root"
         $h.renewable | Should -Be "False"
     }
 
@@ -33,7 +33,7 @@ Describe 'Token Lifecycle' {
         $h = Test-HCVaultToken -Token $t.Token
 
         $h | Should -Not -BeNullOrEmpty
-        $h.it | Should -Not -Be "root"
+        $h.id | Should -Not -Be "root"
         $h.renewable | Should -Be "True"
         $t.LeaseDuration | Should -BeGreaterThan 0
     }
@@ -46,7 +46,7 @@ Describe 'Token Lifecycle' {
         $h = Test-HCVaultTokenSelf
 
         $h | Should -Not -BeNullOrEmpty
-        $h.it | Should -Not -Be "root"
+        $h.id | Should -Not -Be "root"
         $h.renewable | Should -Be "True"
     }
 

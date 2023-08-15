@@ -7,7 +7,7 @@ BeforeAll {
 
 Describe 'Get-HCVaultHealth TLS' {
     It 'should return instance health on TLS listener' {
-        $h = Get-HCVaultHealth -Ctx $LocalTls
+        $h = Get-HCVaultHealth
         $h | Should -Not -BeNullOrEmpty
 
         $h.initialized | Should -Be "True"
