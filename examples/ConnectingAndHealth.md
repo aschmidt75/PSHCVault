@@ -3,7 +3,7 @@
 Create an `HCVaultContext` object, here by also specifying the Vault API address (e.g. `http://127.0.0.1:8200` for a single dev serfver)
 
 ```ps
-PS> $c = New-HCVaultContext -VaultAddr $Env:VAULT_ADDR
+PS> New-HCVaultContext -VaultAddr $Env:VAULT_ADDR
 ```
 
 This context object stores all elements necessary to query the Vault API. It can also hold a token for authentication.
@@ -11,7 +11,7 @@ This context object stores all elements necessary to query the Vault API. It can
 Use `Get-HCVaultHealth` to query basic health information.
 
 ```ps
-PS> Get-HCVaultHealth -Ctx $c                         
+PS> Get-HCVaultHealth                       
                                                                                                                         
 initialized                  : True
 sealed                       : False
