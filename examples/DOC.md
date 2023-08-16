@@ -6,7 +6,7 @@ export VAULT_ADDR=http://127.0.0.1:8200
 ```
 
 ```ps
-$c = New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
+New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
 ```
 
 ## auth/approle
@@ -26,7 +26,7 @@ PS
 ```pwsh
 > $r = "<role-id>"
 > $s = ConvertTo-SecureString -AsPlainText "<secure-id>"
-> $auth = Get-New-HCVaultTokenByAuthWithAppRole.ps1 -ctx $c -AppRoleID $r -SecretID $s -UpdateContext
+> $auth = Get-New-HCVaultTokenByAuthWithAppRole -AppRoleID $r -SecretID $s -UpdateContext
 > ConvertFrom-SecureString -AsPlainText $auth.Token
 hvs.CAESIET61dPkWlKuPTl-6r1hv1p2UTDFjKlJjqsOv8REXmoeGh4KHGh2cy55ellSRUVuYkxlRnN0QmJ5dEJmaGtYd0c
 ```
@@ -39,16 +39,16 @@ check the token from previous step:
 PS
 ```pwsh
 > $c.VaultToken = ConvertTo-SecureString -AsPlainText ...
-> Test-HCVaultToken -ctx $c -Token $auth.Token
+> Test-HCVaultToken -Token $auth.Token
 ```
 
 To test the "self" token, put the token from auth into the context and use `Test-HCVaultTokenSelf`:
 
 PS
 ```pwsh
-> $c | Update-HCVaultContext -Token $auth.token
+> Update-HCVaultContext -Token $auth.token
 
-> Test-HCVaultTokenSelf -ctx $c                                                                                                                        
+> Test-HCVaultTokenSelf                                                                                                                  
 accessor         : mdkM4DdlQ88cRIH2LEhR9Y2F
 bound_cidrs      : {0.0.0.0/0}
 (...)
@@ -65,8 +65,8 @@ vault kv put -mount=secret my-secret foo=a bar=b
 
 PS
 ```pwsh
-> $c = New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
-> $c | Update-HCVaultContext -Token (ConvertTo-SecureString -AsPlainText "root")
-> Read-HCVaultSecret -ctx $c -SecretMountPath secret -Path my-secret
+> New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
+> Update-HCVaultContext -Token (ConvertTo-SecureString -AsPlainText "root")
+> Read-HCVaultSecret -SecretMountPath secret -Path my-secret
 
 ```
