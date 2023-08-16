@@ -49,7 +49,7 @@ To set up an HCVaultContext with the client certificate, use:
 
 ```posh
 > $cert = Get-PfxCertificate -FilePath client.pfx
-> $c = New-HCVaultContext -VaultAddr https://127.0.0.1:9200 -Certificate $cert -SkipCertificateCheck
-> Get-HCVaultHealth -Ctx $c -Verbose
+> New-HCVaultContext -VaultAddr https://127.0.0.1:9200 -Certificate $cert -SkipCertificateCheck
+> Get-HCVaultHealth -Verbose
 (...)
 ```
