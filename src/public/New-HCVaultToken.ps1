@@ -22,10 +22,10 @@ function New-HCVaultToken {
     [CmdletBinding()]
     param (
         [Parameter()]
-        [string]$Role,
+        [string]$Role,      # https://developer.hashicorp.com/vault/api-docs/auth/token#role_name
 
         [Parameter()]
-        [string]$Ttl
+        [string]$Ttl        # https://developer.hashicorp.com/vault/api-docs/auth/token#ttl
     )
 
     $ctx = GetContextOrErr

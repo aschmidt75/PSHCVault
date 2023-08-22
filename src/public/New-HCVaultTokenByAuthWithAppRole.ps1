@@ -13,13 +13,13 @@ function New-HCVaultTokenByAuthWithAppRole {
         bject of class HCVaultContext
 
     .PARAMETER AppRoleID
-        AppRoleID, mandatory
+        AppRoleID, mandatory; see https://developer.hashicorp.com/vault/api-docs/auth/approle#role_id-1
 
     .PARAMETER SecretID
-        SecretID of AppRole, optional
+        SecretID of AppRole, optional; see https://developer.hashicorp.com/vault/api-docs/auth/approle#secret_id-3
 
     .PARAMETER UpdateContext
-        If set to true, sets the received token into the passed context. Defaults to false
+        If set to true, sets the received token into the passed context. Defaults to true
 
     .EXAMPLE
         New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
@@ -41,7 +41,7 @@ function New-HCVaultTokenByAuthWithAppRole {
         [securestring]$SecretID,
 
         [Parameter()]
-        [switch]$UpdateContext = $false
+        [switch]$UpdateContext = $true 
     )
 
     $ctx = GetContextOrErr

@@ -17,7 +17,7 @@ Function Test-HCVaultToken {
     param (
         [Parameter(Mandatory = $true)]
         [ValidateNotNull()]
-        [securestring]$Token
+        [securestring]$Token                    # https://developer.hashicorp.com/vault/api-docs/auth/token#token
     )
 
     $ctx = GetContextOrErr

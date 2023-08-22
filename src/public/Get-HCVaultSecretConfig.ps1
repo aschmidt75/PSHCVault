@@ -6,7 +6,7 @@ Function Get-HCVaultSecretConfig {
     .EXAMPLE
         > New-HCVaultContext -VaultAddr http://127.0.0.1:8200/ -VaultToken (ConvertTo-SecureString -AsPlainText "...") 
         > Get-HCVaultSecretConfig -SecretMountPath /secret    
-
+    
     .LINK
         https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2#read-kv-engine-configuration
     #>
@@ -14,7 +14,7 @@ Function Get-HCVaultSecretConfig {
     param (
         [Parameter(Mandatory = $true)]
         [ValidateNotNull()]
-        [string]$SecretMountPath
+        [string]$SecretMountPath        # https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2#secret-mount-path-1
     )
 
     $ctx = GetContextOrErr

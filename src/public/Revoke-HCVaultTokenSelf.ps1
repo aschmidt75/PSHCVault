@@ -8,7 +8,7 @@ Function Revoke-HCVaultTokenSelf {
 
     .EXAMPLE
         > Revoke-HCVaultTokenSelf
-        > Test-HCVaultTokenSelfc
+        > Test-HCVaultTokenSelf
 
     .LINK
         https://developer.hashicorp.com/vault/api-docs/auth/token#revoke-a-token-self

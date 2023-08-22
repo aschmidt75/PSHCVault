@@ -20,15 +20,14 @@ Function Read-HCVaultSecret {
     param (
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [string]$SecretMountPath,
+        [string]$SecretMountPath,               # https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2#secret-mount-path-2
 
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [string]$Path,
+        [string]$Path,                          # https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2#path
 
-        <# Expands the data element with the desired item, as a securestring. Do not return Metadata #>
         [Parameter()]
-        [string]$ExpandData = $null
+        [string]$ExpandData = $null             # Expands the data element with the desired item, as a securestring. Do not return Metadata then
     )
 
     $ctx = GetContextOrErr

@@ -23,7 +23,7 @@ function New-HCVaultContext {
 
     .EXAMPLE
         > $cert  = Get-PfxCertificate -FilePath client.pfx
-        > New-HCVaultContext -VaultAddr https://127.0.0.1:9200 -VaultToken $tk -Certificate $cert $SkipCertificateCheck
+        > New-HCVaultContext -VaultAddr https://127.0.0.1:9200 -VaultToken $tk -Certificate $cert -SkipCertificateCheck
     #>
     [CmdletBinding()]
     Param (

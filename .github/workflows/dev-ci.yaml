@@ -42,4 +42,4 @@ jobs:
         shell: pwsh
         run: |
           Import-Module ./PSHCVault -Verbose -Force
-          Invoke-Pester -Passthru
+          Invoke-Pester -Passthru -Show All

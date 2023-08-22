@@ -21,7 +21,7 @@ Function Update-HCVaultTokenLease {
     [CmdletBinding()]
     param (
         [Parameter()]
-        [securestring]$Token
+        [securestring]$Token            # https://developer.hashicorp.com/vault/api-docs/auth/token#token-1
     )
 
     $Ctx = GetContextOrErr

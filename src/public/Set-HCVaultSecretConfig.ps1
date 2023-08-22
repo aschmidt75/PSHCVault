@@ -14,16 +14,16 @@ Function Set-HCVaultSecretConfig {
     param (
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
-        [string]$SecretMountPath,
+        [string]$SecretMountPath,               # https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2#secret-mount-path
 
         [Parameter(Mandatory=$false)]
-        [Boolean]$CasRequired,           # TODO make optional
+        [Boolean]$CasRequired,                  # https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2#cas_required
 
         [Parameter(Mandatory=$false)]
-        [String]$DeleteVersionAfter = $Null,
+        [String]$DeleteVersionAfter = $Null,    # https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2#delete_version_after
 
         [Parameter(Mandatory=$false)]
-        [Int64]$MaxVersions           # TODO make optional
+        [Int64]$MaxVersions                     # https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2#max_versions
 
     )
 
