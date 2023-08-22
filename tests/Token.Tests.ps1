@@ -1,8 +1,8 @@
 
 BeforeAll {    
-    $SCRIPT:token = ("root" | ConvertTo-SecureString -AsPlainText)
+    $SCRIPT:roottoken = ("root" | ConvertTo-SecureString -AsPlainText)
     $cert  = Get-PfxCertificate -FilePath client.pfx
-    New-HCVaultContext -VaultAddr "http://127.0.0.1:8200/" -VaultToken $SCRIPT:token
+    New-HCVaultContext -VaultAddr "http://127.0.0.1:8200/" -VaultToken $SCRIPT:roottoken
     $SCRIPT:t = $null
 }
 
@@ -59,7 +59,7 @@ Describe 'Token Lifecycle' {
     }
 
     It 'should create a new short-lived token' {
-        Update-HCVaultContext -VaultToken $SCRIPT:token
+        Update-HCVaultContext -Token $SCRIPT:roottoken
         $t = New-HCVaultToken -Ttl 1s -Role "Default"
 
         $t | Should -Not -BeNullOrEmpty
@@ -72,7 +72,9 @@ Describe 'Token Lifecycle' {
     }
 
     It 'should successfully test that short-lived token has expired' {
-        { Test-HCVaultToken -Token $SCRIPT:t.Token } | Should -Throw
+        { 
+            Test-HCVaultToken -Token $SCRIPT:t.Token
+        } | Should -Throw -ExceptionType "System.InvalidOperationException"
     }
 
 }
