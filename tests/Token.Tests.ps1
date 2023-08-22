@@ -58,4 +58,20 @@ Describe 'Token Lifecycle' {
         { Test-HCVaultTokenSelf } | Should -Throw
     }
 
+    It 'should create a new short-lived token' {
+        $t = New-HCVaultToken -Ttl 1s -Role "Default"
+
+        $t | Should -Not -BeNullOrEmpty
+        $t.Token | Should -Not -BeNullOrEmpty
+        $t.Renewable | Should -Be "True"
+
+        $SCRIPT:t = $t
+
+        Start-Sleep -Seconds 1
+    }
+
+    It 'should successfully test that short-lived token has expired' {
+        { Test-HCVaultToken -Token $SCRIPT:t.Token } | Should -Throw
+    }
+
 }
