@@ -6,6 +6,8 @@ BeforeAll {
     $SCRIPT:t = $null
 }
 
+$VerbosePreference = "Continue"
+
 Describe 'Token Lifecycle' {
     It 'should successfully test self' {
         $h = Test-HCVaultTokenSelf
@@ -13,6 +15,22 @@ Describe 'Token Lifecycle' {
         $h | Should -Not -BeNullOrEmpty
         $h.id | Should -Be "root"
         $h.renewable | Should -Be "False"
+
+        # also with this function and no params
+        $h = Test-HCVaultToken
+
+        $h | Should -Not -BeNullOrEmpty
+        $h.id | Should -Be "root"
+        $h.renewable | Should -Be "False"
+        $h.accessor | Should -Not -BeNullOrEmpty
+
+        # also by its accessor
+        $h2 = Test-HCVaultToken -Accessor $h.accessor
+
+        $h2 | Should -Not -BeNullOrEmpty
+        $h2.accessor | Should -Be $h.accessor
+        $h2.renewable | Should -Be "False"
+
     }
 
     It 'should create a new token' {
