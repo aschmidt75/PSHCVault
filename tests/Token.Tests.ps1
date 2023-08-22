@@ -1,8 +1,8 @@
 
 BeforeAll {    
-    $token = ("root" | ConvertTo-SecureString -AsPlainText)
+    $SCRIPT:token = ("root" | ConvertTo-SecureString -AsPlainText)
     $cert  = Get-PfxCertificate -FilePath client.pfx
-    New-HCVaultContext -VaultAddr "http://127.0.0.1:8200/" -VaultToken $token 
+    New-HCVaultContext -VaultAddr "http://127.0.0.1:8200/" -VaultToken $SCRIPT:token
     $SCRIPT:t = $null
 }
 
@@ -59,6 +59,7 @@ Describe 'Token Lifecycle' {
     }
 
     It 'should create a new short-lived token' {
+        Update-HCVaultContext -VaultToken $SCRIPT:token
         $t = New-HCVaultToken -Ttl 1s -Role "Default"
 
         $t | Should -Not -BeNullOrEmpty
