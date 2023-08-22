@@ -13,7 +13,7 @@ Function Update-HCVaultTokenLease {
 
     .EXAMPLE
         > Update-HCVaultTokenLease
-        > Test-HCVaultTokenSelfc
+        > Test-HCVaultTokenSelf
 
     .LINK
         https://developer.hashicorp.com/vault/api-docs/auth/token#renew-a-token
@@ -59,6 +59,17 @@ Function Update-HCVaultTokenLease {
 Function Update-HCVaultTokenLeaseSelf {
     <#
     .SYNOPSIS
+        Renews the "self" token in the current context  
+
+    .DESCRIPTION
+        Uses the /auth/token/renew endpoint to renew the token from the current context.
+
+    .EXAMPLE
+        > Update-HCVaultTokenLeaseSelf
+        > (Test-HCVaultTokenSelf).ttl
+
+    .LINK
+        https://developer.hashicorp.com/vault/api-docs/auth/token#renew-a-token
     #>
     [CmdletBinding()]
     param (
