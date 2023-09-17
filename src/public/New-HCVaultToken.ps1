@@ -9,6 +9,8 @@ function New-HCVaultToken {
         Optional arguments are the token role and a time to live.
         Returns the full API authentication block, where the token is
         wrapped as a [securestring].
+        If $UpdateContext is set to true, the new token is automatically set into 
+        the current context.
 
     .EXAMPLE
         New-HCVaultContext -VaultAddr http://127.0.0.1:8200/
@@ -25,7 +27,10 @@ function New-HCVaultToken {
         [string]$Role,      # https://developer.hashicorp.com/vault/api-docs/auth/token#role_name
 
         [Parameter()]
-        [string]$Ttl        # https://developer.hashicorp.com/vault/api-docs/auth/token#ttl
+        [string]$Ttl,       # https://developer.hashicorp.com/vault/api-docs/auth/token#ttl
+
+        [Parameter()]
+        [switch]$UpdateContext = $False
     )
 
     $ctx = GetContextOrErr
