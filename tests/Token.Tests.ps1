@@ -99,12 +99,14 @@ Describe 'Token Lifecycle' {
 
 Describe 'Token Revocation Variants' {
     It 'should successfully revoke token by id' {
+        Update-HCVaultContext -Token $SCRIPT:roottoken
         $tk3 = New-HCVaultToken -Ttl 10m -Role "Default"
         Revoke-HCVaultToken -Token $tk3.Token
         ( Test-HCVaultToken -Token $tk3.Token ) | Should -Throw
     }
 
     It 'should successfully revoke token by accessor' {
+        Update-HCVaultContext -Token $SCRIPT:roottoken
         $tk4 = New-HCVaultToken -Ttl 10m -Role "Default"
         Revoke-HCVaultToken -Accessor $tk4.Accessor
         ( Test-HCVaultToken -Token $tk4.Token ) | Should -Throw
