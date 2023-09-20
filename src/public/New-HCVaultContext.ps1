@@ -2,8 +2,7 @@
 function New-HCVaultContext {
     <#
     .SYNOPSIS
-        Creates a new HCVaultContext object from parameters. This context will be automatically used
-        by other commands to connect to vault.
+        Creates a new HCVaultContext object from parameters. This context will be automatically used by other commands to connect to vault.
     
     .PARAMETER VaultAddr
         Uri of Vault Address. Defaults to localhost, encrypted.

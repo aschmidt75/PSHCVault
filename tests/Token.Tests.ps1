@@ -113,3 +113,5 @@ Describe 'Token Revocation Variants' {
         { Test-HCVaultToken -Accessor $tk4.Accessor } | Should -Throw
     }
 }
+
+# TODO: test token renewal
