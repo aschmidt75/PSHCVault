@@ -4,7 +4,7 @@ Function Revoke-HCVaultTokenSelf {
         Revokes the token in the current context
 
     .DESCRIPTION
-        Uses the /auth/token/revoke endpoint to revoke the token from the current context.
+        Uses the /auth/token/revoke-self endpoint to revoke the token from the current context.
 
     .EXAMPLE
         > Revoke-HCVaultTokenSelf

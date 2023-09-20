@@ -33,6 +33,8 @@ Function Test-HCVaultTokenSelf {
     }
 
     if ($res.StatusCode -eq 200) {
+        # TODO: if ìd` is given, make it a SecureString
+
         return $res.Body.data
     }
 
