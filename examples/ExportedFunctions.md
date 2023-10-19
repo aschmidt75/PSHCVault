@@ -12,5 +12,5 @@
 | Test-HCVaultToken | Look up metadata of a given token |
 | Test-HCVaultTokenSelf | Look up metadata of the token in current HCVaultContext |
 | Update-HCVaultContext | Updates an HCVaultContext object with variables such as token etc. |
-| Update-HCVaultTokenLease | Renews a token |
+| Update-HCVaultTokenLease | Renews a token by its token string or its accessor |
 | Update-HCVaultTokenLeaseSelf | Renews the "self" token in the current context |
