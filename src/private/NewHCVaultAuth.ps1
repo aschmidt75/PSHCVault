@@ -9,7 +9,13 @@ Function NewHCVaultAuth {
         [PSCustomObject]$BodyAuthPart
     )
 
-    $client_token_sec = ConvertTo-SecureString -AsPlainText $BodyAuthPart.client_token
+    $client_token_sec = $null
+    if (
+        ($null -ne $BodyAuthPart.client_token) -and
+        ($BodyAuthPart.client_token.Length -gt 0)
+    ) {
+        $client_token_sec = ConvertTo-SecureString -AsPlainText $BodyAuthPart.client_token
+    }
     return [HCVaultAuth] @{
         Token = $client_token_sec
         Accessor = $BodyAuthPart.accessor

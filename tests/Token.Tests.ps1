@@ -96,3 +96,49 @@ Describe 'Token Lifecycle' {
     }
 
 }
+
+Describe 'Token Revocation Variants' {
+    It 'should successfully revoke token by id' {
+        Update-HCVaultContext -Token $SCRIPT:roottoken
+        $tk3 = New-HCVaultToken -Ttl 10m -Role "Default"
+        Revoke-HCVaultToken -Token $tk3.Token
+        { Test-HCVaultToken -Token $tk3.Token } | Should -Throw
+    }
+
+    It 'should successfully revoke token by accessor' {
+        Update-HCVaultContext -Token $SCRIPT:roottoken
+        $tk4 = New-HCVaultToken -Ttl 10m -Role "Default"
+        Revoke-HCVaultToken -Accessor $tk4.Accessor
+        { Test-HCVaultToken -Token $tk4.Token } | Should -Throw
+        { Test-HCVaultToken -Accessor $tk4.Accessor } | Should -Throw
+    }
+}
+
+Describe 'Token Renewal Variants' {
+    It 'should successfully renew token by id' {
+        Update-HCVaultContext -Token $SCRIPT:roottoken
+        $tk5 = New-HCVaultToken -Ttl 10m -Role "Default"
+        { Update-HCVaultTokenLease -Token $tk5.Token } | Should -Not -Throw
+        { Test-HCVaultToken -Token $tk5.Token } | Should -Not -Throw
+    }
+
+    It 'should successfully renew token by accessor' {
+        Update-HCVaultContext -Token $SCRIPT:roottoken
+        $tk6 = New-HCVaultToken -Ttl 10m -Role "Default"
+        { Update-HCVaultTokenLease -Accessor $tk6.Accessor } | Should -Not -Throw
+        { Test-HCVaultToken -Token $tk6.Token } | Should -Not -Throw
+    }
+    
+    It 'should fail to renew token on invalid accessor' {
+        Update-HCVaultContext -Token $SCRIPT:roottoken
+        { Update-HCVaultTokenLease -Accessor "nosuchaccessor" } | Should -Throw
+    }
+
+    It 'should successfully renew self token' {
+        Update-HCVaultContext -Token $SCRIPT:roottoken
+        New-HCVaultToken -Ttl 10m -Role "Default" -UpdateContext
+        { Update-HCVaultTokenLeaseSelf } | Should -Not -Throw
+        { Test-HCVaultTokenSelf } | Should -Not -Throw
+    }
+
+}
